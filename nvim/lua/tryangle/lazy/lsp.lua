@@ -8,6 +8,7 @@ return {
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-cmdline",
         "hrsh7th/nvim-cmp",
+        "MysticalDevil/inlay-hints.nvim",
         "j-hui/fidget.nvim",
     },
 
@@ -25,7 +26,8 @@ return {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {
                         capabilities = capabilities,
-                        on_attach = function(_, bufnr)
+                        on_attach = function(client, bufnr)
+                            require("inlay-hints").on_attach(client, bufnr)
                             local opts = { noremap = true, silent = true, buffer = bufnr }
 
                             vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, opts) -- Jump to definition
@@ -35,6 +37,10 @@ return {
                             vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts) -- Go to previous diagnostic
                             vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts) -- Go to next diagnostic
                             vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts) -- S
+
+                            vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts) -- rename
+                            vim.keymap.set('n', '<leader>fmt', vim.lsp.buf.format, opts) -- format buffer
+
                         end,
                     }
                 end,
