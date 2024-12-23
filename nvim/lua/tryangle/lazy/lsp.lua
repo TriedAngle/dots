@@ -33,6 +33,7 @@ return {
                             vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, opts) -- Jump to definition
                             vim.keymap.set('n', '<leader>i', vim.lsp.buf.hover, opts) -- Show hover information
                             vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, opts) -- Go to implementation
+                            vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, opts) -- Go to references
                             vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts) -- Show diagnostics
                             vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts) -- Go to previous diagnostic
                             vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts) -- Go to next diagnostic
