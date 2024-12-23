@@ -20,6 +20,7 @@ return {
                     "toggle_node",
                     nowait = false,
                 },
+                ["P"] = { "toggle_preview", config = { use_image_nvim = true } },
             },
             preview_width = 50,
             preview = true,
