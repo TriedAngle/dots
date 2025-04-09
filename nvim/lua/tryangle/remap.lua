@@ -67,3 +67,4 @@ vim.keymap.set('n', '<leader>l', '<C-w>l')
 
 -- integration with tmux
 vim.keymap.set('n', '<leader>tmd', function() vim.fn.system("tmux detach") end, { silent = true })
+vim.keymap.set('n', '<leader>tms', function() vim.fn.system("tmux display-popup -E \"tms switch\"") end)

@@ -1,0 +1,25 @@
+theme = "catpuccin_mocha"
+
+[editor]
+line-number = "relative"
+cursorline = true
+color-modes = true
+rulers = [100]
+end-of-line-diagnostics = "hint"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.indent-guides]
+render = true
+
+[editor.lsp]
+display-inlay-hints = true
+
+[keys.normal]
+S-h = "goto_line_start"
+S-l = "goto_line_end"
+S-j = "page_cursor_half_down"
+S-k = "page_cursor_half_up"
