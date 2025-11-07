@@ -51,8 +51,23 @@ vim.keymap.set("n", "Q", "<nop>")
 -- search current word in current scope and select it for replace
 -- vim.keymap.set("n", "<leader>s", [[gd[{V%:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { noremap = true })
 -- search current word in current file and select it for replace
-vim.keymap.set("n", "<leader>S", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
+vim.keymap.set('v', '<leader>s', function()
+  local search  = vim.fn.input('Search: ')
+  if search == nil or search == '' then return end
+  local replace = vim.fn.input('Replace: ')
+
+  -- Use very-nomagic patterns (\V) and escape delimiter/backslash/&
+  local search_esc  = vim.fn.escape(search, [[/\]])
+  local replace_esc = vim.fn.escape(replace, [[/\&]])
+
+  -- Substitute across the visual range only
+  vim.cmd(string.format([['<,'>s/\V%s/%s/g]], search_esc, replace_esc))
+end, { desc = 'Search & replace in visual selection' })
+
 vim.keymap.set('n', '<leader>nt', ':Neotree toggle<CR>', { silent = true, noremap = true })
+
 
 -- toggle terminal
 vim.keymap.set('n', '<leader>tt', ':ToggleTerm<CR>', { silent = true, noremap = true })
