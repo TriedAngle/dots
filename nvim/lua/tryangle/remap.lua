@@ -16,12 +16,17 @@ vim.keymap.set("n", "L", "$")
 vim.keymap.set("v", "H", "^")
 vim.keymap.set("v", "L", "$")
 
--- remove the next newline
--- vim.keymap.set("n", "J", "mzJ`z")
+
 
 -- jump half the editor
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
+
+-- more selection
+vim.keymap.set("v", "H", "^")
+vim.keymap.set("v", "L", "$")
+vim.keymap.set("n", "<leader>vv", "0v$h", { desc = "Select inner line" })
+vim.keymap.set("n", "t", "viw", { desc = "Select symbol under cursor" })
 
 -- better jump next on search
 vim.keymap.set("n", "n", "nzzzv")
@@ -34,12 +39,16 @@ vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("v", "<", "<gv")
 
 
+
 vim.keymap.set("n", "<C-A-Up>", "<cmd>normal! yyP<CR>")
 
 -- create new scope and center cursor in it
 vim.keymap.set("n", "<leader>{", "A{<CR>}<Esc>O")
 
 -- copy and pasting changes
+vim.keymap.set({"n", "v"}, "d", '"_d')
+vim.keymap.set({"n", "v"}, "x", "d")
+vim.keymap.set("n", "X", "dd")
 vim.keymap.set("x", "p", "\"_dP")        -- by default visual does not copy replaced text
 vim.keymap.set("x", "<leader>p", "P")    -- paste and copy replaced text
 vim.keymap.set("v", "<leader>y", "\"+y") -- copy selected text and jump to start of selection
@@ -66,11 +75,8 @@ vim.keymap.set('v', '<leader>s', function()
   vim.cmd(string.format([['<,'>s/\V%s/%s/g]], search_esc, replace_esc))
 end, { desc = 'Search & replace in visual selection' })
 
-vim.keymap.set('n', '<leader>nt', ':Neotree toggle<CR>', { silent = true, noremap = true })
-
-
 -- toggle terminal
-vim.keymap.set('n', '<leader>tt', ':ToggleTerm<CR>', { silent = true, noremap = true })
+vim.keymap.set('n', '<leader>t', ':ToggleTerm<CR>', { silent = true })
 -- escape will escape the terminal
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
@@ -81,5 +87,20 @@ vim.keymap.set('n', '<leader>k', '<C-w>k')
 vim.keymap.set('n', '<leader>l', '<C-w>l')
 
 -- integration with tmux
-vim.keymap.set('n', '<leader>tmd', function() vim.fn.system("tmux detach") end, { silent = true })
-vim.keymap.set('n', '<leader>tms', function() vim.fn.system("tmux display-popup -E \"tms switch\"") end)
+-- vim.keymap.set('n', '<leader>tmd', function() vim.fn.system("tmux detach") end, { silent = true })
+-- vim.keymap.set('n', '<leader>tms', function() vim.fn.system("tmux display-popup -E \"tms switch\"") end)
+
+if vim.g.neovide then
+  vim.keymap.set('v', '<D-c>', '"+y') -- Copy
+  vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
+  vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
+  vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
+  vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
+end
+
+-- Allow clipboard copy paste in neovim
+vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+

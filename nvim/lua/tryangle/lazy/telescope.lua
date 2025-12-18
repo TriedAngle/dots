@@ -12,16 +12,12 @@ return {
           defaults = { 
             file_ignore_patterns = { 
                 "node_modules",
-                "target"
+                "target",
+                "build"
             },
             file_sorter = require('telescope.sorters').get_fzy_sorter,
             generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
     
-            -- Command to use for finding files.
-            -- This setup checks if 'fd' is executable and uses it if available.
-            -- The '--hidden' flag includes dotfiles.
-            -- The '--no-ignore' flag would disable respecting .gitignore, but we want it enabled.
-            -- The '--follow' flag follows symbolic links.
             find_command = {
               'fd',
               '--type', 'f',
@@ -39,13 +35,20 @@ return {
             local word = vim.fn.expand("<cword>")
             builtin.grep_string({ search = word })
         end)
-        vim.keymap.set('n', '<leader>pWs', function()
+        vim.keymap.set('n', '<leader>pts', function()
             local word = vim.fn.expand("<cWORD>")
             builtin.grep_string({ search = word })
         end)
         vim.keymap.set('n', '<leader>ps', function()
-            builtin.grep_string({ search = vim.fn.input("Grep > ") })
+            builtin.grep_string({ 
+                search = vim.fn.input("Grep > "),
+                initial_mode = "normal" 
+            })
         end)
+        vim.keymap.set('n', '<leader>pr', function()
+            builtin.resume({ initial_mode = "normal" })
+        end, { desc = "Telescope Resume" })
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
     end
 }
+
