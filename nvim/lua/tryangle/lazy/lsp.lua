@@ -40,13 +40,11 @@ return {
             },
             handlers = {
                 function(server_name)
-                    -- Note: You can eventually update this to use vim.lsp.config too,
-                    -- but for now, keeping the old handler for Mason servers is safer
-                    -- until mason-lspconfig fully defaults to the new API.
-                    require("lspconfig")[server_name].setup {
+                    vim.lsp.config(server_name, {
                         capabilities = capabilities,
                         on_attach = on_attach,
-                    }
+                    })
+                    vim.lsp.enable(server_name)
                 end,
             }
         })
