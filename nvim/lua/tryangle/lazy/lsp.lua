@@ -22,6 +22,7 @@ return {
             require("inlay-hints").on_attach(client, bufnr)
             local opts = { noremap = true, silent = true, buffer = bufnr }
             vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, opts)
+            vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', '<leader>i', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, opts)
             vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, opts)
@@ -74,8 +75,6 @@ return {
                 end, { 'i', 's' }),
                 ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
                 ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<S-j>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<S-k>'] = cmp.mapping.select_prev_item(cmp_select),
                 ['<C-y>'] = cmp.mapping.confirm({ select = true }),
                 ['<S-CR>'] = cmp.mapping.confirm({ select = true }),
                 ['<Tab>'] = cmp.mapping.confirm({ select = true }),
